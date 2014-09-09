@@ -1,4 +1,0 @@
-HealthTip
-=========
-
-HealthTip
