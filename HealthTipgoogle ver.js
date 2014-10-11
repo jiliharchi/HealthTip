@@ -88,7 +88,7 @@ createVisualization()
 
 function createVisualization(){
 
-d3.json("../data/personalData.json", function(error, data) {
+d3.json("personalData.json", function(error, data) {
 
  var defaultRoot = data[0];
 
@@ -113,7 +113,7 @@ function jumpto(x){
         barChartUpdate();
         removeCenterText();
 
-    d3.json("../data/personalData.json", function(error, data) {
+    d3.json("personalData.json", function(error, data) {
       
       var root;
       for (var i=0;i<data.length;i++){
@@ -133,7 +133,7 @@ function jumpto(x){
 
 function loadRelationNet() {
 
-d3.json("../data/relationNetDataset.json", function(error, classes) {
+d3.json("relationNetDataset.json", function(error, classes) {
 
   var nodes = cluster.nodes(packageHierarchy(classes)),
       links = packageImports(nodes);
@@ -176,7 +176,7 @@ d3.json("../data/relationNetDataset.json", function(error, classes) {
 //Food Chart
 function loadFoodChart(classes) {
 
-d3.csv("../data/projectData.csv", function(error, data){
+d3.csv("projectData.csv", function(error, data){
       data.shift()
 
 
@@ -740,7 +740,7 @@ function defaultTextID(d)
 
     var img = imageVis.append("svg:image")
                       .attr("id", "textID")
-			              	.attr("xlink:href", "../data/"+d.name+".jpg")
+			              	.attr("xlink:href", d.name+".jpg")
 			              	.attr("width", 150)
 			              	.attr("height", 150)
 			              	.attr("x", 60)
@@ -1326,6 +1326,7 @@ function barChartUpdate()
 function mouseovered(d) {
 
   if(d.size != 4000) foodDes(d);
+  else userDes(d);
 
 
  link
@@ -1441,4 +1442,33 @@ CalorieForm.selectAll("tr").style("background-color",function(d,j){
                        }
                      });
 
+}
+
+
+
+function userDes(d){
+
+  var foodChartTr = CalorieForm.selectAll("tr")[0];
+  var index = [];
+  
+  for(var i=0;i<CalorieForm.selectAll("tr")[0].length-1; i++){
+    for(var j=0;j<d.imports.length; j++){
+  
+     if(d.imports[j] == CalorieForm.selectAll("tr")[0][i].__data__.FoodItem) index.push(i);
+   }
+
+}
+
+
+
+CalorieForm.selectAll("tr").style("background-color",function(d,j){
+                     console.log(index);
+                     console.log(j)
+                     if(index.indexOf(j)> -1)return "#ffb346";
+                       else {
+                        if (j%2==0){return "#efefef";}
+                        else{return "#c4c4c4";}
+                       }
+
+                     });
 }
