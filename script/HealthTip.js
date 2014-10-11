@@ -88,7 +88,7 @@ createVisualization()
 
 function createVisualization(){
 
-d3.json("./data/personalData.json", function(error, data) {
+d3.json("personalData.json", function(error, data) {
 
  var defaultRoot = data[0];
 
